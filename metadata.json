@@ -1,0 +1,6 @@
+{
+  "name": "Ebentrick Global Services",
+  "description": "Smart home automation, solar inverter systems, electrical engineering, digital security, and certified professional training academy. Light makes the difference.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
