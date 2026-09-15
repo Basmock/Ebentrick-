@@ -8,6 +8,7 @@ import { BookingModal } from './components/BookingModal';
 import { EnrollmentModal } from './components/EnrollmentModal';
 import { PaymentModal } from './components/PaymentModal';
 import { InvoiceModal } from './components/InvoiceModal';
+import { AuthModal } from './components/AuthModal';
 import { ProjectsShowcase } from './components/ProjectsShowcase';
 import { ProjectVideoGallery } from './components/ProjectVideoGallery';
 import { TestimonialsSection } from './components/TestimonialsSection';
@@ -62,6 +63,10 @@ export default function App() {
 
   // Invoice Modal
   const [invoiceData, setInvoiceData] = useState<any | null>(null);
+
+  // Authentication Modal
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [authModalMode, setAuthModalMode] = useState<'signin' | 'signup'>('signin');
 
   useEffect(() => {
     const unsub = appStore.subscribe(() => {
@@ -227,7 +232,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col selection:bg-blue-600 selection:text-white transition-colors duration-200">
       {/* Top Navigation */}
       <Navbar
         currentView={currentView}
@@ -235,6 +240,10 @@ export default function App() {
         onOpenBooking={(srvId) => handleStartBooking(srvId)}
         onOpenAdmin={() => setIsAdminView(true)}
         onOpenLiveChat={() => setIsChatOpen(true)}
+        onOpenAuth={(mode) => {
+          setAuthModalMode(mode || 'signin');
+          setIsAuthModalOpen(true);
+        }}
         unreadCount={appStore.getInquiries().filter(i => i.status === 'new').length}
       />
 
@@ -368,6 +377,18 @@ export default function App() {
       <InvoiceModal
         invoiceData={invoiceData}
         onClose={() => setInvoiceData(null)}
+      />
+
+      {/* User Sign In / Sign Up Modal */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        initialMode={authModalMode}
+        onClose={() => setIsAuthModalOpen(false)}
+        onSuccess={(user) => {
+          if (user.role === 'admin') {
+            setIsAdminView(true);
+          }
+        }}
       />
     </div>
   );

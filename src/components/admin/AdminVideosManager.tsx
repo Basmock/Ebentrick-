@@ -109,10 +109,10 @@ export const AdminVideosManager: React.FC<AdminVideosManagerProps> = ({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h3 className="text-2xl font-display font-bold text-white">
+          <h3 className="text-2xl font-display font-bold text-slate-900 dark:text-white">
             Project Video Showcase Manager ({videos.length})
           </h3>
-          <p className="text-xs sm:text-sm text-slate-400">
+          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
             Admins simply drop in a YouTube link to publish real installation walkthroughs and student lab showcases.
           </p>
         </div>
@@ -130,7 +130,7 @@ export const AdminVideosManager: React.FC<AdminVideosManagerProps> = ({
       </div>
 
       {/* Search Bar */}
-      <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 flex items-center">
+      <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center shadow-xs">
         <div className="relative flex-1 max-w-md">
           <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
@@ -138,7 +138,7 @@ export const AdminVideosManager: React.FC<AdminVideosManagerProps> = ({
             placeholder="Search videos by project title, client, or tag..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-red-500"
+            className="w-full pl-9 pr-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-red-500"
           />
         </div>
       </div>
@@ -148,12 +148,12 @@ export const AdminVideosManager: React.FC<AdminVideosManagerProps> = ({
         {filteredVideos.map((vid) => (
           <div
             key={vid.id}
-            className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-slate-700 transition-colors"
+            className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden flex flex-col justify-between hover:border-red-300 dark:hover:border-slate-700 transition-colors shadow-xs"
           >
             <div>
               {/* Thumbnail */}
               <div 
-                className="relative aspect-video w-full bg-slate-950 cursor-pointer group"
+                className="relative aspect-video w-full bg-slate-100 dark:bg-slate-950 cursor-pointer group"
                 onClick={() => setPreviewVideo(vid)}
               >
                 <img
@@ -177,19 +177,19 @@ export const AdminVideosManager: React.FC<AdminVideosManagerProps> = ({
 
               {/* Info */}
               <div className="p-4">
-                <div className="text-xs text-slate-400 flex items-center gap-1 mb-1">
-                  <MapPin className="w-3.5 h-3.5 text-red-400" />
+                <div className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1 mb-1">
+                  <MapPin className="w-3.5 h-3.5 text-red-500 dark:text-red-400" />
                   <span>{vid.clientOrLocation}</span>
                 </div>
-                <h4 className="text-sm font-bold text-white line-clamp-2 mb-2">
+                <h4 className="text-sm font-bold text-slate-900 dark:text-white line-clamp-2 mb-2">
                   {vid.title}
                 </h4>
-                <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
                   {vid.description}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-1">
                   {vid.tags.map((t, idx) => (
-                    <span key={idx} className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-950 text-slate-400 border border-slate-800">
+                    <span key={idx} className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-950 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800">
                       #{t}
                     </span>
                   ))}
@@ -198,10 +198,10 @@ export const AdminVideosManager: React.FC<AdminVideosManagerProps> = ({
             </div>
 
             {/* Actions */}
-            <div className="p-4 pt-2 border-t border-slate-800/80 flex items-center justify-between">
+            <div className="p-4 pt-2 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
               <button
                 onClick={() => setPreviewVideo(vid)}
-                className="text-xs font-semibold text-blue-400 hover:text-blue-300 flex items-center gap-1"
+                className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 flex items-center gap-1"
               >
                 <Play className="w-3.5 h-3.5" />
                 <span>Test Player</span>
@@ -209,7 +209,7 @@ export const AdminVideosManager: React.FC<AdminVideosManagerProps> = ({
 
               <button
                 onClick={() => handleDelete(vid.id, vid.title)}
-                className="p-1.5 rounded-lg text-rose-400 bg-rose-950/40 hover:bg-rose-900/60 border border-rose-800/40"
+                className="p-1.5 rounded-lg text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/60 border border-rose-200 dark:border-rose-800/40"
                 title="Remove Video"
               >
                 <Trash2 className="w-3.5 h-3.5" />
@@ -221,39 +221,39 @@ export const AdminVideosManager: React.FC<AdminVideosManagerProps> = ({
 
       {/* Add Video Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-in fade-in">
-          <div className="relative w-full max-w-lg bg-slate-900 border border-slate-700 rounded-3xl p-6 sm:p-8 shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in">
+          <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-3xl p-6 sm:p-8 shadow-2xl text-slate-900 dark:text-white">
             <button
               onClick={() => setShowAddModal(false)}
-              className="absolute top-5 right-5 p-2 rounded-full text-slate-400 hover:text-white bg-slate-800"
+              className="absolute top-5 right-5 p-2 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-white bg-slate-100 dark:bg-slate-800"
             >
               <X className="w-5 h-5" />
             </button>
 
             {isSuccess ? (
               <div className="py-8 text-center space-y-3">
-                <div className="w-14 h-14 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto">
+                <div className="w-14 h-14 rounded-full bg-emerald-500/20 text-emerald-500 dark:text-emerald-400 flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
-                <h3 className="text-xl font-bold text-white">Video Published!</h3>
-                <p className="text-xs text-slate-400">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">Video Published!</h3>
+                <p className="text-xs text-slate-600 dark:text-slate-400">
                   The video has been embedded and is live in the public Project Video Gallery.
                 </p>
               </div>
             ) : (
               <form onSubmit={handleAddVideo} className="space-y-4">
-                <div className="flex items-center gap-2 text-xs font-mono uppercase text-red-400 font-bold mb-1">
+                <div className="flex items-center gap-2 text-xs font-mono uppercase text-red-600 dark:text-red-400 font-bold mb-1">
                   <Youtube className="w-4 h-4" />
                   <span>Admin Video Publisher</span>
                 </div>
-                <h3 className="text-xl font-bold text-white">Drop in YouTube Project Link</h3>
-                <p className="text-xs text-slate-400">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">Drop in YouTube Project Link</h3>
+                <p className="text-xs text-slate-600 dark:text-slate-400">
                   Paste the YouTube link. The system extracts the embed and thumbnail automatically.
                 </p>
 
                 {/* URL Input */}
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
                     YouTube URL *
                   </label>
                   <input
@@ -262,16 +262,16 @@ export const AdminVideosManager: React.FC<AdminVideosManagerProps> = ({
                     placeholder="https://www.youtube.com/watch?v=... or youtu.be/..."
                     value={youtubeUrl}
                     onChange={(e) => setYoutubeUrl(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs sm:text-sm text-white font-mono focus:outline-none focus:border-red-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-slate-900 dark:text-white font-mono focus:outline-none focus:border-red-500"
                   />
                   {parsedId && (
-                    <div className="mt-2 p-2 rounded-lg bg-slate-950 border border-slate-800 flex items-center gap-3">
+                    <div className="mt-2 p-2 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center gap-3">
                       <img
                         src={getYouTubeThumbnailUrl(parsedId)}
                         alt="Thumbnail"
                         className="w-16 h-10 object-cover rounded"
                       />
-                      <span className="text-[11px] font-mono text-emerald-400">
+                      <span className="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-semibold">
                         Extracted ID: {parsedId}
                       </span>
                     </div>
@@ -280,7 +280,7 @@ export const AdminVideosManager: React.FC<AdminVideosManagerProps> = ({
 
                 {/* Title */}
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
                     Project Video Title *
                   </label>
                   <input
@@ -289,20 +289,20 @@ export const AdminVideosManager: React.FC<AdminVideosManagerProps> = ({
                     placeholder="e.g. 15kVA Solar Inverter + Lithium Battery Commissioning"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white focus:outline-none focus:border-red-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-red-500"
                   />
                 </div>
 
                 {/* Category & Location */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
                       Category
                     </label>
                     <select
                       value={category}
                       onChange={(e) => setCategory(e.target.value as any)}
-                      className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white"
+                      className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-900 dark:text-white"
                     >
                       <option value="smart-living">Smart Living & Automation</option>
                       <option value="power-energy">Solar & Power ATS</option>
@@ -312,7 +312,7 @@ export const AdminVideosManager: React.FC<AdminVideosManagerProps> = ({
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
                       Client / Location
                     </label>
                     <input
@@ -320,7 +320,7 @@ export const AdminVideosManager: React.FC<AdminVideosManagerProps> = ({
                       placeholder="e.g. Lekki Phase 1, Lagos"
                       value={clientOrLocation}
                       onChange={(e) => setClientOrLocation(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white"
+                      className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-900 dark:text-white"
                     />
                   </div>
                 </div>
@@ -328,7 +328,7 @@ export const AdminVideosManager: React.FC<AdminVideosManagerProps> = ({
                 {/* Duration & Tags */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
                       Duration
                     </label>
                     <input
@@ -336,12 +336,12 @@ export const AdminVideosManager: React.FC<AdminVideosManagerProps> = ({
                       placeholder="e.g. 3:45"
                       value={duration}
                       onChange={(e) => setDuration(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white"
+                      className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-900 dark:text-white"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
                       Tags (Comma-separated)
                     </label>
                     <input
@@ -349,14 +349,14 @@ export const AdminVideosManager: React.FC<AdminVideosManagerProps> = ({
                       placeholder="e.g. Solar, Inverter, Lithium"
                       value={tagsInput}
                       onChange={(e) => setTagsInput(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white"
+                      className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-900 dark:text-white"
                     />
                   </div>
                 </div>
 
                 {/* Description */}
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
                     Walkthrough Description
                   </label>
                   <textarea
@@ -364,7 +364,7 @@ export const AdminVideosManager: React.FC<AdminVideosManagerProps> = ({
                     placeholder="Brief description of the scope, hardware, and client outcome..."
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-900 dark:text-white"
                   />
                 </div>
 
@@ -373,7 +373,7 @@ export const AdminVideosManager: React.FC<AdminVideosManagerProps> = ({
                   <button
                     type="button"
                     onClick={() => setShowAddModal(false)}
-                    className="px-4 py-2 rounded-xl text-xs text-slate-400 bg-slate-800"
+                    className="px-4 py-2 rounded-xl text-xs text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700"
                   >
                     Cancel
                   </button>
@@ -398,16 +398,16 @@ export const AdminVideosManager: React.FC<AdminVideosManagerProps> = ({
           onClick={() => setPreviewVideo(null)}
         >
           <div 
-            className="relative w-full max-w-3xl bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden shadow-2xl"
+            className="relative w-full max-w-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-3xl overflow-hidden shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between p-4 px-6 border-b border-slate-800 bg-slate-950">
-              <h3 className="text-sm font-bold text-white truncate max-w-md">
+            <div className="flex items-center justify-between p-4 px-6 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white truncate max-w-md">
                 {previewVideo.title}
               </h3>
               <button
                 onClick={() => setPreviewVideo(null)}
-                className="p-1 rounded-full text-slate-400 hover:text-white"
+                className="p-1 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-white"
               >
                 <X className="w-5 h-5" />
               </button>

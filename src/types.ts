@@ -207,6 +207,19 @@ export interface AdminUser {
   lastActive: string;
 }
 
+export type UserRole = 'admin' | 'client' | 'student';
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: UserRole;
+  phone?: string;
+  company?: string;
+  avatarUrl?: string;
+  createdAt: string;
+}
+
 export interface ProjectCaseStudy {
   id: string;
   title: string;

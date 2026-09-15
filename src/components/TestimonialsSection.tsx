@@ -85,7 +85,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
   };
 
   return (
-    <section id="testimonials-section" className="py-20 bg-slate-50 dark:bg-slate-900/60 relative border-t border-slate-200 dark:border-slate-800 transition-colors duration-200">
+    <section id="testimonials-section" className="py-20 bg-white dark:bg-slate-900/60 relative border-t border-b border-slate-200 dark:border-slate-800 transition-colors duration-200">
       {/* Subtle Background Accent */}
       <div className="absolute inset-0 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:24px_24px] opacity-20 pointer-events-none" />
 

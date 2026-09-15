@@ -54,7 +54,7 @@ export const Hero: React.FC<HeroProps> = ({
   );
 
   return (
-    <div className="relative overflow-hidden pt-8 pb-16 lg:pt-14 lg:pb-24 border-b border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-transparent transition-colors duration-200">
+    <div className="relative overflow-hidden pt-8 pb-16 lg:pt-14 lg:pb-24 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-transparent transition-colors duration-200">
       {/* Background Subtle Tech Matrix Effect */}
       <div className="absolute inset-0 opacity-10 dark:opacity-20 pointer-events-none bg-[radial-gradient(#2563eb_1px,transparent_1px)] [background-size:24px_24px]" />
       

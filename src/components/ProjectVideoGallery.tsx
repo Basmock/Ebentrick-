@@ -104,7 +104,7 @@ export const ProjectVideoGallery: React.FC<ProjectVideoGalleryProps> = ({
   const previewYtId = extractYouTubeId(youtubeUrl);
 
   return (
-    <section id="videos-section" className="py-20 bg-slate-900 dark:bg-slate-950 text-white relative overflow-hidden transition-colors duration-200">
+    <section id="videos-section" className="py-20 bg-white dark:bg-slate-950 text-slate-900 dark:text-white border-t border-b border-slate-200 dark:border-slate-800 relative overflow-hidden transition-colors duration-200">
       {/* Glow Effects */}
       <div className="absolute top-1/4 -left-48 w-96 h-96 bg-red-600/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 -right-48 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
@@ -113,14 +113,14 @@ export const ProjectVideoGallery: React.FC<ProjectVideoGalleryProps> = ({
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-10 gap-6">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-red-950/80 text-red-400 border border-red-500/30 mb-4">
-              <Youtube className="w-4 h-4 text-red-500" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-red-50 text-red-700 dark:bg-red-950/80 dark:text-red-400 border border-red-200 dark:border-red-500/30 mb-4 shadow-sm">
+              <Youtube className="w-4 h-4 text-red-600 dark:text-red-500" />
               <span>Turnkey Engineering Video Gallery</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-white tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-slate-900 dark:text-white tracking-tight">
               Watch Our Projects in Real Action
             </h2>
-            <p className="mt-2 text-slate-400 text-sm sm:text-base leading-relaxed">
+            <p className="mt-2 text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
               Explore walkthroughs of executed commercial solar microgrids, automated estate gates, KNX smart penthouses, and student lab training sessions.
             </p>
           </div>
@@ -134,7 +134,7 @@ export const ProjectVideoGallery: React.FC<ProjectVideoGalleryProps> = ({
                 placeholder="Search videos, location, hardware..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full sm:w-64 pl-9 pr-3.5 py-2.5 rounded-xl bg-slate-800/80 border border-slate-700 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-red-500"
+                className="w-full sm:w-64 pl-9 pr-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-red-500 shadow-sm"
               />
             </div>
 
@@ -157,7 +157,7 @@ export const ProjectVideoGallery: React.FC<ProjectVideoGalleryProps> = ({
               className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
                 selectedCategory === cat.id
                   ? 'bg-red-600 text-white shadow-md shadow-red-600/30'
-                  : 'bg-slate-800/60 text-slate-400 border border-slate-700/60 hover:text-white hover:bg-slate-800'
+                  : 'bg-white dark:bg-slate-800/60 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/60 hover:text-red-600 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800 shadow-xs'
               }`}
             >
               {cat.label}
@@ -167,10 +167,10 @@ export const ProjectVideoGallery: React.FC<ProjectVideoGalleryProps> = ({
 
         {/* Video Grid */}
         {filteredVideos.length === 0 ? (
-          <div className="text-center py-16 p-8 rounded-2xl bg-slate-800/40 border border-slate-800">
-            <Film className="w-12 h-12 text-slate-600 mx-auto mb-3" />
-            <h3 className="text-base font-semibold text-white">No project videos found</h3>
-            <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
+          <div className="text-center py-16 p-8 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800">
+            <Film className="w-12 h-12 text-slate-400 dark:text-slate-600 mx-auto mb-3" />
+            <h3 className="text-base font-semibold text-slate-900 dark:text-white">No project videos found</h3>
+            <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 max-w-sm mx-auto">
               Try adjusting your search terms or category filter, or drop in a new YouTube link to showcase.
             </p>
             <button
@@ -178,7 +178,7 @@ export const ProjectVideoGallery: React.FC<ProjectVideoGalleryProps> = ({
                 setSelectedCategory('all');
                 setSearchQuery('');
               }}
-              className="mt-4 px-4 py-2 rounded-xl text-xs font-medium text-slate-300 bg-slate-800 hover:text-white"
+              className="mt-4 px-4 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
             >
               Clear Filters
             </button>
@@ -188,7 +188,7 @@ export const ProjectVideoGallery: React.FC<ProjectVideoGalleryProps> = ({
             {filteredVideos.map((video) => (
               <div
                 key={video.id}
-                className="group flex flex-col justify-between bg-slate-800/50 border border-slate-700/70 hover:border-red-500/50 rounded-2xl overflow-hidden shadow-lg transition-all duration-300 hover:-translate-y-1"
+                className="group flex flex-col justify-between bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-red-400 dark:hover:border-red-500/50 rounded-2xl overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
               >
                 {/* Video Thumbnail & Play Trigger */}
                 <div 
@@ -203,7 +203,7 @@ export const ProjectVideoGallery: React.FC<ProjectVideoGalleryProps> = ({
                   />
                   
                   {/* Overlay Gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
 
                   {/* Play Button Icon */}
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -228,21 +228,21 @@ export const ProjectVideoGallery: React.FC<ProjectVideoGalleryProps> = ({
                 <div className="p-5 flex-1 flex flex-col justify-between">
                   <div>
                     {/* Location & Tags */}
-                    <div className="flex items-center justify-between gap-2 mb-2 text-xs text-slate-400">
-                      <span className="flex items-center gap-1 text-slate-300 truncate font-medium">
-                        <MapPin className="w-3.5 h-3.5 text-red-400 flex-shrink-0" />
+                    <div className="flex items-center justify-between gap-2 mb-2 text-xs text-slate-500 dark:text-slate-400">
+                      <span className="flex items-center gap-1 text-slate-600 dark:text-slate-300 truncate font-medium">
+                        <MapPin className="w-3.5 h-3.5 text-red-500 dark:text-red-400 flex-shrink-0" />
                         <span className="truncate">{video.clientOrLocation}</span>
                       </span>
                     </div>
 
                     <h3 
                       onClick={() => setActiveVideo(video)}
-                      className="text-base font-bold text-white group-hover:text-red-400 transition-colors line-clamp-2 cursor-pointer mb-2"
+                      className="text-base font-bold text-slate-900 dark:text-white group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors line-clamp-2 cursor-pointer mb-2"
                     >
                       {video.title}
                     </h3>
 
-                    <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed mb-4">
+                    <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed mb-4">
                       {video.description}
                     </p>
                   </div>
@@ -253,7 +253,7 @@ export const ProjectVideoGallery: React.FC<ProjectVideoGalleryProps> = ({
                       {video.tags.map((tag, idx) => (
                         <span
                           key={idx}
-                          className="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-900/80 text-slate-300 border border-slate-700/60"
+                          className="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-100 dark:bg-slate-900/80 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/60"
                         >
                           #{tag}
                         </span>
@@ -261,10 +261,10 @@ export const ProjectVideoGallery: React.FC<ProjectVideoGalleryProps> = ({
                     </div>
 
                     {/* Action Bar */}
-                    <div className="pt-3 border-t border-slate-700/60 flex items-center justify-between">
+                    <div className="pt-3 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
                       <button
                         onClick={() => setActiveVideo(video)}
-                        className="text-xs font-semibold text-red-400 hover:text-red-300 flex items-center gap-1 transition-colors"
+                        className="text-xs font-semibold text-red-600 dark:text-red-400 hover:text-red-500 flex items-center gap-1 transition-colors"
                       >
                         <Play className="w-3.5 h-3.5 fill-current" />
                         <span>Watch Video</span>
@@ -273,7 +273,7 @@ export const ProjectVideoGallery: React.FC<ProjectVideoGalleryProps> = ({
                       {onBookService && (
                         <button
                           onClick={() => onBookService(video.title)}
-                          className="text-xs font-medium text-slate-300 hover:text-white hover:underline transition-colors"
+                          className="text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:underline transition-colors"
                         >
                           Request Similar Build
                         </button>

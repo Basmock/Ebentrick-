@@ -224,10 +224,10 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h3 className="text-2xl font-display font-bold text-white">
+          <h3 className="text-2xl font-display font-bold text-slate-900 dark:text-white">
             Technical Academy Courses ({courses.length})
           </h3>
-          <p className="text-xs sm:text-sm text-slate-400">
+          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
             Create new training curricula, set tuition in Naira, update syllabi, and open running cohorts.
           </p>
         </div>
@@ -238,7 +238,7 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
               setSelectedCourseForCohort(courses[0]?.id || '');
               setShowCohortModal(true);
             }}
-            className="px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-200 bg-slate-800 hover:bg-slate-700 border border-slate-700 transition-colors flex items-center gap-1.5"
+            className="px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition-colors flex items-center gap-1.5 shadow-xs"
           >
             <Calendar className="w-4 h-4" />
             <span>Open Cohort</span>
@@ -255,7 +255,7 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
       </div>
 
       {/* Search Bar */}
-      <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 flex items-center">
+      <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center shadow-xs">
         <div className="relative flex-1 max-w-md">
           <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
@@ -263,7 +263,7 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
             placeholder="Search course title, program code, syllabus..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-red-500"
+            className="w-full pl-9 pr-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-red-500"
           />
         </div>
       </div>
@@ -273,52 +273,52 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
         {filteredCourses.map((course) => (
           <div
             key={course.id}
-            className="p-6 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between hover:border-slate-700 transition-colors"
+            className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col justify-between hover:border-red-300 dark:hover:border-slate-700 transition-colors shadow-xs"
           >
             <div>
               <div className="flex items-center justify-between gap-2 mb-3">
-                <span className="text-xs font-mono font-bold text-blue-400 bg-blue-950/60 border border-blue-500/30 px-2.5 py-0.5 rounded-lg">
+                <span className="text-xs font-mono font-bold text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-500/30 px-2.5 py-0.5 rounded-lg">
                   {course.code}
                 </span>
-                <span className="text-sm font-mono font-extrabold text-emerald-400">
+                <span className="text-sm font-mono font-extrabold text-emerald-600 dark:text-emerald-400">
                   {formatNaira(course.tuitionFee)}
                 </span>
               </div>
 
-              <h4 className="text-lg font-bold text-white mb-2">
+              <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
                 {course.title}
               </h4>
 
-              <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed mb-4">
+              <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed mb-4">
                 {course.description}
               </p>
 
-              <div className="grid grid-cols-2 gap-2 text-xs text-slate-300 py-3 border-y border-slate-800 mb-4">
-                <div className="flex items-center gap-1.5 text-slate-400">
-                  <Clock className="w-3.5 h-3.5 text-red-400" />
+              <div className="grid grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-300 py-3 border-y border-slate-100 dark:border-slate-800 mb-4">
+                <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
+                  <Clock className="w-3.5 h-3.5 text-red-500 dark:text-red-400" />
                   <span>{course.durationWeeks} Weeks ({course.hoursPerWeek} hrs/wk)</span>
                 </div>
-                <div className="flex items-center gap-1.5 text-slate-400">
-                  <Award className="w-3.5 h-3.5 text-amber-400" />
+                <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
+                  <Award className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
                   <span className="truncate">{course.level}</span>
                 </div>
               </div>
 
               {/* Cohorts summary */}
               <div className="mb-4">
-                <span className="text-[11px] uppercase font-mono tracking-wider text-slate-400 font-bold block mb-1.5">
+                <span className="text-[11px] uppercase font-mono tracking-wider text-slate-500 dark:text-slate-400 font-bold block mb-1.5">
                   Scheduled Cohorts ({course.nextCohorts.length}):
                 </span>
                 <div className="space-y-1.5">
                   {course.nextCohorts.map((coh) => (
                     <div
                       key={coh.id}
-                      className="flex items-center justify-between p-2 rounded-lg bg-slate-950 border border-slate-800 text-[11px]"
+                      className="flex items-center justify-between p-2 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-[11px]"
                     >
-                      <span className="text-slate-300 font-medium">
+                      <span className="text-slate-700 dark:text-slate-300 font-medium">
                         {coh.startDate} — {coh.endDate}
                       </span>
-                      <span className="font-mono text-emerald-400">
+                      <span className="font-mono text-emerald-600 dark:text-emerald-400 font-bold">
                         {coh.enrolledSeats}/{coh.maxSeats} seats
                       </span>
                     </div>
@@ -328,13 +328,13 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
             </div>
 
             {/* Action Buttons */}
-            <div className="pt-4 border-t border-slate-800 flex items-center justify-between">
+            <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
               <button
                 onClick={() => {
                   setSelectedCourseForCohort(course.id);
                   setShowCohortModal(true);
                 }}
-                className="text-xs font-semibold text-blue-400 hover:text-blue-300 flex items-center gap-1"
+                className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 flex items-center gap-1"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Add Cohort</span>
@@ -343,7 +343,7 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => handleOpenEdit(course)}
-                  className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 bg-slate-800 hover:bg-slate-700 hover:text-white flex items-center gap-1"
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white flex items-center gap-1 transition-colors"
                 >
                   <Edit className="w-3.5 h-3.5" />
                   <span>Edit Details</span>
@@ -351,7 +351,7 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
 
                 <button
                   onClick={() => handleDeleteCourse(course.id, course.title)}
-                  className="p-1.5 rounded-lg text-rose-400 bg-rose-950/40 hover:bg-rose-900/60 border border-rose-800/40"
+                  className="p-1.5 rounded-lg text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/60 border border-rose-200 dark:border-rose-800/40"
                   title="Delete Course"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
@@ -364,31 +364,31 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
 
       {/* Course Create/Edit Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/85 backdrop-blur-md animate-in fade-in">
-          <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-slate-900 border border-slate-700 rounded-3xl p-6 sm:p-8 shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm animate-in fade-in">
+          <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-3xl p-6 sm:p-8 shadow-2xl text-slate-900 dark:text-white">
             <button
               onClick={() => setShowModal(false)}
-              className="absolute top-5 right-5 p-2 rounded-full text-slate-400 hover:text-white bg-slate-800"
+              className="absolute top-5 right-5 p-2 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-white bg-slate-100 dark:bg-slate-800"
             >
               <X className="w-5 h-5" />
             </button>
 
             <form onSubmit={handleSubmitCourse} className="space-y-4">
-              <div className="flex items-center gap-2 text-xs font-mono uppercase text-red-400 font-bold mb-1">
+              <div className="flex items-center gap-2 text-xs font-mono uppercase text-red-600 dark:text-red-400 font-bold mb-1">
                 <GraduationCap className="w-4 h-4" />
                 <span>{editingCourse ? 'Edit Academy Course' : 'Create New Academy Course'}</span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-white">
+              <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
                 {editingCourse ? `Edit: ${editingCourse.title}` : 'Develop Technical Course'}
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-600 dark:text-slate-400">
                 All details set here will appear in the Academy view, enrollment modal, and cohort registration system.
               </p>
 
               {/* Title & Code */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="sm:col-span-2">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
                     Course Title *
                   </label>
                   <input
@@ -397,12 +397,12 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
                     placeholder="e.g. Industrial Automation, PLC & SCADA Systems"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs sm:text-sm text-white focus:outline-none focus:border-red-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-red-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
                     Program Code *
                   </label>
                   <input
@@ -411,7 +411,7 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
                     placeholder="e.g. PLC-401"
                     value={code}
                     onChange={(e) => setCode(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs sm:text-sm text-white font-mono focus:outline-none focus:border-red-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-slate-900 dark:text-white font-mono focus:outline-none focus:border-red-500"
                   />
                 </div>
               </div>
@@ -419,13 +419,13 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
               {/* Category, Duration, Hours */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
                     Category
                   </label>
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value as any)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white focus:outline-none focus:border-red-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-red-500"
                   >
                     <option value="smart-living">Smart Living & KNX</option>
                     <option value="power-energy">Solar & Hybrid Power</option>
@@ -435,7 +435,7 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
                     Duration (Weeks)
                   </label>
                   <input
@@ -444,12 +444,12 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
                     max={52}
                     value={durationWeeks}
                     onChange={(e) => setDurationWeeks(Number(e.target.value))}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs sm:text-sm text-white focus:outline-none focus:border-red-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-red-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
                     Hours Per Week
                   </label>
                   <input
@@ -458,7 +458,7 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
                     max={40}
                     value={hoursPerWeek}
                     onChange={(e) => setHoursPerWeek(Number(e.target.value))}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs sm:text-sm text-white focus:outline-none focus:border-red-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-red-500"
                   />
                 </div>
               </div>
@@ -466,7 +466,7 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
               {/* Tuition in Naira & Level */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
                     Tuition Fee (₦ Naira) *
                   </label>
                   <div className="relative">
@@ -478,22 +478,22 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
                       step={5000}
                       value={tuitionFee}
                       onChange={(e) => setTuitionFee(Number(e.target.value))}
-                      className="w-full pl-8 pr-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs sm:text-sm text-white font-mono focus:outline-none focus:border-red-500"
+                      className="w-full pl-8 pr-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-slate-900 dark:text-white font-mono focus:outline-none focus:border-red-500"
                     />
                   </div>
-                  <span className="text-[11px] text-slate-400 mt-1 block">
-                    Formatted: <strong className="text-emerald-400 font-mono">{formatNaira(tuitionFee)}</strong>
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 block">
+                    Formatted: <strong className="text-emerald-600 dark:text-emerald-400 font-mono">{formatNaira(tuitionFee)}</strong>
                   </span>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
                     Skill Level
                   </label>
                   <select
                     value={level}
                     onChange={(e) => setLevel(e.target.value as any)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white focus:outline-none focus:border-red-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-red-500"
                   >
                     <option value="Beginner / Foundation">Beginner / Foundation</option>
                     <option value="Intermediate / Practitioner">Intermediate / Practitioner</option>
@@ -504,7 +504,7 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
 
               {/* Overview */}
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
                   Course Overview & Description *
                 </label>
                 <textarea
@@ -513,13 +513,13 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
                   placeholder="Summary of skills acquired, industry relevance, and hands-on laboratory scope..."
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white focus:outline-none focus:border-red-500"
+                  className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-red-500"
                 />
               </div>
 
               {/* Syllabus (One per line) */}
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
                   Syllabus Modules (One module per line)
                 </label>
                 <textarea
@@ -527,14 +527,14 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
                   placeholder="Week 1: Fundamentals and Safety Protocols&#10;Week 2: Circuit Design & Schematic Reading&#10;Week 3: Physical Hardware Wiring & Lab Commissioning"
                   value={syllabusInput}
                   onChange={(e) => setSyllabusInput(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white font-mono focus:outline-none focus:border-red-500"
+                  className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-900 dark:text-white font-mono focus:outline-none focus:border-red-500"
                 />
               </div>
 
               {/* Hardware Kit and Certification */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
                     Hardware Kit Included
                   </label>
                   <input
@@ -542,12 +542,12 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
                     placeholder="e.g. Student Multimeter, Relay Board, Sensors, Screwdriver Set"
                     value={hardwareKitIncluded}
                     onChange={(e) => setHardwareKitIncluded(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs sm:text-sm text-white focus:outline-none focus:border-red-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-red-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
                     Official Certificate Awarded
                   </label>
                   <input
@@ -555,14 +555,14 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
                     placeholder="e.g. Ebentrick Certified Professional"
                     value={certificationTitle}
                     onChange={(e) => setCertificationTitle(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs sm:text-sm text-white focus:outline-none focus:border-red-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-red-500"
                   />
                 </div>
               </div>
 
               {/* Prerequisites */}
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
                   Student Entry Prerequisites
                 </label>
                 <input
@@ -570,42 +570,42 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
                   placeholder="e.g. Basic physics/secondary school science or electrical background"
                   value={prerequisites}
                   onChange={(e) => setPrerequisites(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-xs sm:text-sm text-white focus:outline-none focus:border-red-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-red-500"
                 />
               </div>
 
               {/* Initial Cohort (only for new course) */}
               {!editingCourse && (
-                <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-3">
-                  <span className="text-xs font-bold text-white block">
+                <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-3">
+                  <span className="text-xs font-bold text-slate-900 dark:text-white block">
                     Optional: Schedule First Cohort Now
                   </span>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
                     <div>
-                      <label className="block text-slate-400 mb-1">Start Date</label>
+                      <label className="block text-slate-600 dark:text-slate-400 mb-1">Start Date</label>
                       <input
                         type="date"
                         value={initCohortStartDate}
                         onChange={(e) => setInitCohortStartDate(e.target.value)}
-                        className="w-full px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-white"
+                        className="w-full px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
                       />
                     </div>
                     <div>
-                      <label className="block text-slate-400 mb-1">End Date</label>
+                      <label className="block text-slate-600 dark:text-slate-400 mb-1">End Date</label>
                       <input
                         type="date"
                         value={initCohortEndDate}
                         onChange={(e) => setInitCohortEndDate(e.target.value)}
-                        className="w-full px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-white"
+                        className="w-full px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
                       />
                     </div>
                     <div>
-                      <label className="block text-slate-400 mb-1">Instructor</label>
+                      <label className="block text-slate-600 dark:text-slate-400 mb-1">Instructor</label>
                       <input
                         type="text"
                         value={initCohortInstructor}
                         onChange={(e) => setInitCohortInstructor(e.target.value)}
-                        className="w-full px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-white"
+                        className="w-full px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
                       />
                     </div>
                   </div>
@@ -617,7 +617,7 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white bg-slate-800"
+                  className="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-800"
                 >
                   Cancel
                 </button>
@@ -637,25 +637,25 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
 
       {/* Cohort Creation Modal */}
       {showCohortModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-in fade-in">
-          <div className="relative w-full max-w-md bg-slate-900 border border-slate-700 rounded-3xl p-6 shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in">
+          <div className="relative w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-3xl p-6 shadow-2xl text-slate-900 dark:text-white">
             <button
               onClick={() => setShowCohortModal(false)}
-              className="absolute top-4 right-4 p-2 rounded-full text-slate-400 hover:text-white"
+              className="absolute top-4 right-4 p-2 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-white bg-slate-100 dark:bg-slate-800"
             >
               <X className="w-5 h-5" />
             </button>
 
             <form onSubmit={handleAddCohort} className="space-y-4">
-              <h3 className="text-xl font-bold text-white">Open New Cohort Schedule</h3>
-              <p className="text-xs text-slate-400">Open lab seats and calendar dates for students to register.</p>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white">Open New Cohort Schedule</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400">Open lab seats and calendar dates for students to register.</p>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">Select Course *</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Select Course *</label>
                 <select
                   value={selectedCourseForCohort}
                   onChange={(e) => setSelectedCourseForCohort(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white"
+                  className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-900 dark:text-white"
                   required
                 >
                   {courses.map((c) => (
@@ -668,56 +668,56 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
 
               <div className="grid grid-cols-2 gap-2 text-xs">
                 <div>
-                  <label className="block text-slate-400 mb-1">Start Date *</label>
+                  <label className="block text-slate-600 dark:text-slate-400 mb-1">Start Date *</label>
                   <input
                     type="date"
                     required
                     value={cohortStartDate}
                     onChange={(e) => setCohortStartDate(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-400 mb-1">End Date *</label>
+                  <label className="block text-slate-600 dark:text-slate-400 mb-1">End Date *</label>
                   <input
                     type="date"
                     required
                     value={cohortEndDate}
                     onChange={(e) => setCohortEndDate(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">Format</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Format</label>
                 <input
                   type="text"
                   value={cohortFormat}
                   onChange={(e) => setCohortFormat(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white"
+                  className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-900 dark:text-white"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-2 text-xs">
                 <div>
-                  <label className="block text-slate-400 mb-1">Max Seat Capacity</label>
+                  <label className="block text-slate-600 dark:text-slate-400 mb-1">Max Seat Capacity</label>
                   <input
                     type="number"
                     min={5}
                     max={40}
                     value={cohortMaxSeats}
                     onChange={(e) => setCohortMaxSeats(Number(e.target.value))}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-400 mb-1">Lead Instructor</label>
+                  <label className="block text-slate-600 dark:text-slate-400 mb-1">Lead Instructor</label>
                   <input
                     type="text"
                     value={cohortInstructor}
                     onChange={(e) => setCohortInstructor(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
                   />
                 </div>
               </div>
@@ -726,7 +726,7 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
                 <button
                   type="button"
                   onClick={() => setShowCohortModal(false)}
-                  className="px-4 py-2 rounded-xl text-xs text-slate-400 bg-slate-800"
+                  className="px-4 py-2 rounded-xl text-xs text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800"
                 >
                   Cancel
                 </button>
