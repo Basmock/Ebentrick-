@@ -17,6 +17,8 @@ import { Footer } from './components/Footer';
 import { WhatsAppChatWidget } from './components/WhatsAppChatWidget';
 import { AdminDashboard } from './components/AdminDashboard';
 import { appStore } from './services/store';
+import { authService } from './services/auth';
+import { isAdminManager } from './lib/supabase';
 import { 
   ServiceItem, 
   ServiceBooking, 
@@ -90,7 +92,12 @@ export default function App() {
 
   const handleNavigate = (view: 'home' | 'services' | 'training' | 'projects' | 'videos' | 'testimonials' | 'contact' | 'admin') => {
     if (view === 'admin') {
-      setIsAdminView(true);
+      if (isAdminManager(authService.getCurrentUser())) {
+        setIsAdminView(true);
+      } else {
+        setAuthModalMode('signin');
+        setIsAuthModalOpen(true);
+      }
       return;
     }
     setIsAdminView(false);
@@ -238,7 +245,14 @@ export default function App() {
         currentView={currentView}
         onNavigate={handleNavigate}
         onOpenBooking={(srvId) => handleStartBooking(srvId)}
-        onOpenAdmin={() => setIsAdminView(true)}
+        onOpenAdmin={() => {
+          if (isAdminManager(authService.getCurrentUser())) {
+            setIsAdminView(true);
+          } else {
+            setAuthModalMode('signin');
+            setIsAuthModalOpen(true);
+          }
+        }}
         onOpenLiveChat={() => setIsChatOpen(true)}
         onOpenAuth={(mode) => {
           setAuthModalMode(mode || 'signin');
@@ -310,7 +324,14 @@ export default function App() {
 
       {/* Footer */}
       <Footer
-        onOpenAdmin={() => setIsAdminView(true)}
+        onOpenAdmin={() => {
+          if (isAdminManager(authService.getCurrentUser())) {
+            setIsAdminView(true);
+          } else {
+            setAuthModalMode('signin');
+            setIsAuthModalOpen(true);
+          }
+        }}
         onSelectService={() => {
           document.getElementById('services-section')?.scrollIntoView({ behavior: 'smooth' });
         }}

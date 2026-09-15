@@ -23,6 +23,7 @@ import { appStore } from '../services/store';
 import { authService } from '../services/auth';
 import { User } from '../types';
 import { ThemeToggle } from '../context/ThemeContext';
+import { isAdminManager } from '../lib/supabase';
 
 interface NavbarProps {
   currentView?: 'home' | 'services' | 'training' | 'projects' | 'videos' | 'testimonials' | 'contact' | 'admin';
@@ -53,6 +54,8 @@ export const Navbar: React.FC<NavbarProps> = ({
     return unsub;
   }, []);
 
+  const isProjectAdminManager = isAdminManager(currentUser);
+
   const handleBooking = (serviceId?: string) => {
     onOpenBooking?.(serviceId);
   };
@@ -65,6 +68,10 @@ export const Navbar: React.FC<NavbarProps> = ({
     setMobileMenuOpen(false);
 
     if (view === 'admin') {
+      if (!isProjectAdminManager) {
+        onOpenAuth?.('signin');
+        return;
+      }
       if (onOpenAdmin) {
         onOpenAdmin();
         return;
@@ -251,25 +258,27 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span>Book Service</span>
           </button>
 
-          {/* Admin Switcher */}
-          <button
-            id="nav-admin-portal-btn"
-            onClick={() => handleNav('admin')}
-            className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all border ${
-              currentView === 'admin'
-                ? 'bg-red-500/20 text-red-600 dark:text-red-300 border-red-500/50'
-                : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600'
-            }`}
-            title="Access Management Dashboard"
-          >
-            <Lock className="w-3 h-3 text-red-500 dark:text-red-400" />
-            <span>Admin</span>
-            {unreadCount > 0 && (
-              <span className="ml-1 px-1.5 py-0.2 bg-red-600 text-white text-[10px] font-mono font-bold rounded-full">
-                {unreadCount}
-              </span>
-            )}
-          </button>
+          {/* Admin Switcher - STRICTLY visible ONLY if signed in with designated Admin Manager UID */}
+          {isProjectAdminManager && (
+            <button
+              id="nav-admin-portal-btn"
+              onClick={() => handleNav('admin')}
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all border ${
+                currentView === 'admin'
+                  ? 'bg-red-500/20 text-red-600 dark:text-red-300 border-red-500/50'
+                  : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600'
+              }`}
+              title="Access Management Dashboard (Admin Manager)"
+            >
+              <Lock className="w-3 h-3 text-red-500 dark:text-red-400" />
+              <span>Admin</span>
+              {unreadCount > 0 && (
+                <span className="ml-1 px-1.5 py-0.2 bg-red-600 text-white text-[10px] font-mono font-bold rounded-full">
+                  {unreadCount}
+                </span>
+              )}
+            </button>
+          )}
 
           {/* User Authentication Status / Sign In / Sign Up */}
           {currentUser ? (
@@ -415,15 +424,19 @@ export const Navbar: React.FC<NavbarProps> = ({
           >
             Contact & Location
           </button>
-          <button
-            onClick={() => handleNav('admin')}
-            className={`w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium flex items-center gap-2 ${
-              currentView === 'admin' ? 'bg-red-500/20 text-red-700 dark:text-red-200' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
-            }`}
-          >
-            <Lock className="w-4 h-4 text-red-500 dark:text-red-400" />
-            <span>Admin Management Panel</span>
-          </button>
+          {/* Mobile Admin Management: STRICTLY visible ONLY if signed in with designated Admin Manager UID */}
+          {isProjectAdminManager && (
+            <button
+              id="mobile-nav-admin-btn"
+              onClick={() => handleNav('admin')}
+              className={`w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium flex items-center gap-2 ${
+                currentView === 'admin' ? 'bg-red-500/20 text-red-700 dark:text-red-200' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+              }`}
+            >
+              <Lock className="w-4 h-4 text-red-500 dark:text-red-400" />
+              <span>Admin Management Panel</span>
+            </button>
+          )}
 
           {/* Mobile Auth Section */}
           <div className="py-2 border-t border-slate-100 dark:border-slate-800">

@@ -479,10 +479,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               >
                 <div className="text-[10px] font-bold text-red-600 dark:text-red-400 flex items-center gap-1">
                   <ShieldCheck className="w-3 h-3" />
-                  <span>Admin</span>
+                  <span>Admin Manager</span>
                 </div>
                 <div className="text-[11px] font-semibold text-slate-800 dark:text-slate-200 truncate mt-0.5">
                   Engr. Bassey
+                </div>
+                <div className="text-[9px] font-mono text-slate-400 truncate">
+                  UID: 350afc5a...
                 </div>
               </button>
 
@@ -520,7 +523,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         {/* Footer Note */}
         <div className="p-3.5 bg-slate-50/80 dark:bg-slate-950/60 border-t border-slate-100 dark:border-slate-800 text-center">
           <p className="text-[11px] text-slate-500 dark:text-slate-400">
-            Database adapter ready • Stored safely locally until persistent cloud DB is configured.
+            Connected to Supabase Cloud Database • Admin Manager UID: <span className="font-mono text-slate-700 dark:text-slate-300 font-semibold select-all">350afc5a-9ae9-45d8-9c9b-ad64441da431</span>
           </p>
         </div>
       </div>

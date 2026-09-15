@@ -49,6 +49,7 @@ import {
 } from '../types';
 import { formatNaira } from '../utils/currency';
 import { authService } from '../services/auth';
+import { isAdminManager, ADMIN_MANAGER_UID } from '../lib/supabase';
 import { ThemeToggle } from '../context/ThemeContext';
 import { AuthModal } from './AuthModal';
 import { AdminServicesManager } from './admin/AdminServicesManager';
@@ -180,6 +181,66 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     await authService.logout();
   };
 
+  const isManager = isAdminManager(currentUser);
+
+  if (!isManager) {
+    return (
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center p-4">
+        <div className="max-w-md w-full bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 shadow-xl text-center">
+          <div className="w-16 h-16 rounded-2xl bg-red-100 dark:bg-red-950/50 border border-red-200 dark:border-red-900/50 flex items-center justify-center mx-auto mb-4 text-red-600 dark:text-red-400">
+            <ShieldAlert className="w-8 h-8" />
+          </div>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
+            Admin Access Restricted
+          </h2>
+          <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
+            The Central Operations Console is strictly restricted to the authorized Project Admin Manager.
+          </p>
+          <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-left text-xs font-mono mb-6 space-y-1.5">
+            <div className="text-slate-500 text-[11px]">Authorized Admin UID:</div>
+            <div className="text-red-600 dark:text-red-400 font-bold break-all select-all text-[11px]">
+              {ADMIN_MANAGER_UID}
+            </div>
+            {currentUser && (
+              <>
+                <div className="text-slate-500 text-[11px] mt-2">Your Current Session UID:</div>
+                <div className="text-slate-700 dark:text-slate-300 break-all select-all text-[11px]">
+                  {currentUser.id} ({currentUser.email})
+                </div>
+              </>
+            )}
+          </div>
+          <div className="flex flex-col gap-2">
+            <button
+              onClick={() => setShowAuthModal(true)}
+              className="w-full py-2.5 px-4 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-2 shadow-md shadow-red-600/20"
+            >
+              <LogIn className="w-4 h-4" />
+              <span>Sign In as Admin Manager</span>
+            </button>
+            <button
+              onClick={onExitAdmin}
+              className="w-full py-2.5 px-4 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-semibold text-xs transition-colors"
+            >
+              Back to Main Website
+            </button>
+          </div>
+        </div>
+        {showAuthModal && (
+          <AuthModal
+            isOpen={showAuthModal}
+            onClose={() => setShowAuthModal(false)}
+            initialMode="signin"
+            onSuccess={() => {
+              setCurrentUser(authService.getCurrentUser());
+              setShowAuthModal(false);
+            }}
+          />
+        )}
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col transition-colors duration-200">
       {/* Admin Top Navigation Bar */}
@@ -200,10 +261,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           </div>
 
           <div className="flex items-center gap-2.5">
-            {/* Live Status Pill */}
+            {/* Supabase Database Connected Pill */}
             <span className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-xs font-mono">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              Live System Active
+              Supabase DB Connected
             </span>
 
             {/* Theme Toggle Button for Admin */}
@@ -218,8 +279,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   <span className="text-xs font-bold text-slate-900 dark:text-white line-clamp-1 max-w-[130px]">
                     {currentUser.name}
                   </span>
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-blue-600 dark:text-blue-400">
-                    {currentUser.role}
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-red-600 dark:text-red-400 font-bold">
+                    Admin Manager
                   </span>
                 </div>
                 <button

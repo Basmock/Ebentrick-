@@ -118,7 +118,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
           <div className={`font-display font-extrabold tracking-tight leading-none ${textScaleMap[size]}`}>
             <span className="text-red-500">E</span>
             <span className={variant === 'dark' ? 'text-white' : variant === 'light' ? 'text-slate-900' : 'text-slate-900 dark:text-white'}>BEN</span>
-            <span className="text-red-500">TRIC</span>
+            <span className="text-red-500">TRICK</span>
             <span className="text-blue-500 text-xs sm:text-sm font-semibold tracking-wider uppercase ml-1.5 px-1.5 py-0.5 rounded bg-blue-500/10 border border-blue-500/20">
               GLOBAL
             </span>
