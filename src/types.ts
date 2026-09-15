@@ -22,6 +22,12 @@ export interface ServiceItem {
   trainingCourseId?: string;
   iconName: string;
   badge?: string;
+  // Aliases for admin and legacy components
+  title?: string;
+  icon?: string;
+  shortDescription?: string;
+  detailedDescription?: string;
+  typicalTimeline?: string;
 }
 
 export type BookingStatus = 
@@ -94,18 +100,16 @@ export interface TrainingCourse {
   durationWeeks: number;
   hoursPerWeek: number;
   tuitionFee: number;
-  syllabus: {
-    week: number;
-    moduleTitle: string;
-    description: string;
-    handsOnLab: string;
-  }[];
-  prerequisites: string[];
-  certificationAwarded: string;
-  hardwareProvided: string[];
+  syllabus: any;
+  prerequisites: any;
+  certificationAwarded?: string;
+  certificationTitle?: string;
+  hardwareProvided?: string[];
+  hardwareKitIncluded?: any;
   nextCohorts: TrainingCohort[];
-  instructorName: string;
-  instructorRole: string;
+  instructorName?: string;
+  instructorRole?: string;
+  description?: string;
 }
 
 export interface TrainingEnrollment {
@@ -240,7 +244,9 @@ export interface ProjectVideo {
   description: string;
   duration?: string;
   tags: string[];
-  dateAdded: string;
+  dateAdded?: string;
+  dateCompleted?: string;
   featured?: boolean;
+  thumbnailUrl?: string;
 }
 

@@ -94,11 +94,27 @@ export const AdminTrainingManager: React.FC<AdminTrainingManagerProps> = ({
     setHoursPerWeek(c.hoursPerWeek);
     setTuitionFee(c.tuitionFee);
     setLevel(c.level);
-    setDescription(c.description);
-    setSyllabusInput(c.syllabus.join('\n'));
-    setHardwareKitIncluded(c.hardwareKitIncluded);
-    setCertificationTitle(c.certificationTitle);
-    setPrerequisites(c.prerequisites || '');
+    setDescription(c.description || (Array.isArray(c.syllabus) && c.syllabus[0]?.description) || '');
+    setSyllabusInput(
+      Array.isArray(c.syllabus)
+        ? c.syllabus
+            .map((s: any) =>
+              typeof s === 'string'
+                ? s
+                : `${s.moduleTitle || ''}: ${s.description || ''}`
+            )
+            .join('\n')
+        : ''
+    );
+    setHardwareKitIncluded(
+      Array.isArray(c.hardwareKitIncluded)
+        ? c.hardwareKitIncluded.join(', ')
+        : (c.hardwareKitIncluded || (c.hardwareProvided ? c.hardwareProvided.join(', ') : ''))
+    );
+    setCertificationTitle(c.certificationTitle || c.certificationAwarded || '');
+    setPrerequisites(
+      Array.isArray(c.prerequisites) ? c.prerequisites.join(', ') : (c.prerequisites || '')
+    );
     setShowModal(true);
   };
 

@@ -130,6 +130,24 @@ export const Footer: React.FC<FooterProps> = ({
                   </a>
                 </li>
               ))}
+              <li className="pt-2 border-t border-slate-800/80">
+                <a
+                  href="#videos-section"
+                  className="hover:text-red-400 text-slate-300 font-medium transition-colors flex items-center gap-1.5"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
+                  <span>Project Videos Gallery</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#testimonials-section"
+                  className="hover:text-amber-400 text-slate-300 font-medium transition-colors flex items-center gap-1.5"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                  <span>Client Testimonials</span>
+                </a>
+              </li>
             </ul>
           </div>
 

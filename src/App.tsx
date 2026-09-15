@@ -9,6 +9,8 @@ import { EnrollmentModal } from './components/EnrollmentModal';
 import { PaymentModal } from './components/PaymentModal';
 import { InvoiceModal } from './components/InvoiceModal';
 import { ProjectsShowcase } from './components/ProjectsShowcase';
+import { ProjectVideoGallery } from './components/ProjectVideoGallery';
+import { TestimonialsSection } from './components/TestimonialsSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { WhatsAppChatWidget } from './components/WhatsAppChatWidget';
@@ -18,18 +20,22 @@ import {
   ServiceItem, 
   ServiceBooking, 
   TrainingEnrollment, 
-  TrainingCourse 
+  TrainingCourse,
+  ProjectVideo,
+  TestimonialItem
 } from './types';
 
 export default function App() {
   // Navigation & View State
   const [isAdminView, setIsAdminView] = useState(false);
-  const [currentView, setCurrentView] = useState<'home' | 'services' | 'training' | 'projects' | 'contact' | 'admin'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'services' | 'training' | 'projects' | 'videos' | 'testimonials' | 'contact' | 'admin'>('home');
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   // Store data
   const [services, setServices] = useState<ServiceItem[]>(appStore.getServices());
   const [courses, setCourses] = useState<TrainingCourse[]>(appStore.getCourses());
+  const [videos, setVideos] = useState<ProjectVideo[]>(appStore.getVideos());
+  const [testimonials, setTestimonials] = useState<TestimonialItem[]>(appStore.getTestimonials());
 
   // Modal States
   const [selectedServiceForSpecs, setSelectedServiceForSpecs] = useState<ServiceItem | null>(null);
@@ -61,6 +67,8 @@ export default function App() {
     const unsub = appStore.subscribe(() => {
       setServices(appStore.getServices());
       setCourses(appStore.getCourses());
+      setVideos(appStore.getVideos());
+      setTestimonials(appStore.getTestimonials());
     });
     return unsub;
   }, []);
@@ -75,7 +83,7 @@ export default function App() {
     setIsBookingModalOpen(true);
   };
 
-  const handleNavigate = (view: 'home' | 'services' | 'training' | 'projects' | 'contact' | 'admin') => {
+  const handleNavigate = (view: 'home' | 'services' | 'training' | 'projects' | 'videos' | 'testimonials' | 'contact' | 'admin') => {
     if (view === 'admin') {
       setIsAdminView(true);
       return;
@@ -270,6 +278,23 @@ export default function App() {
           onBookService={() => handleStartBooking()}
         />
 
+        {/* Turnkey Project Video Showcase (YouTube Drop-in & Play) */}
+        <ProjectVideoGallery
+          videos={videos}
+          onBookService={(srvTitle) => handleStartBooking()}
+          onOpenAdmin={() => setIsAdminView(true)}
+        />
+
+        {/* Client & Academy Graduate Verified Reviews */}
+        <TestimonialsSection
+          testimonials={testimonials}
+          onBookService={() => handleStartBooking()}
+          onExploreTraining={() => {
+            const elem = document.getElementById('training-section');
+            elem?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        />
+
         {/* Corporate Inquiries, Emergency Dispatch & Contact */}
         <ContactSection />
       </main>
@@ -325,7 +350,7 @@ export default function App() {
       {isPaymentModalOpen && paymentData && (
         <PaymentModal
           amount={paymentData.amount}
-          currency="USD"
+          currency="NGN"
           description={paymentData.description}
           referenceId={paymentData.referenceId}
           referenceCode={paymentData.referenceCode}

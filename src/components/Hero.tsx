@@ -9,7 +9,8 @@ import {
   PhoneCall, 
   Award, 
   CheckCircle2,
-  Sparkles
+  Sparkles,
+  Play
 } from 'lucide-react';
 import { appStore } from '../services/store';
 
@@ -70,6 +71,14 @@ export const Hero: React.FC<HeroProps> = ({
             <span className="text-slate-400 dark:text-slate-500">•</span>
             <span className="text-blue-600 dark:text-blue-400 font-mono">ISO & IEE COMPLIANT</span>
           </div>
+
+          <a
+            href="#videos-section"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-50 dark:bg-red-950/70 border border-red-200 dark:border-red-500/30 text-red-600 dark:text-red-300 text-xs font-semibold hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors shadow-sm"
+          >
+            <Play className="w-3 h-3 text-red-500 fill-red-500" />
+            <span>Watch Project Videos</span>
+          </a>
         </div>
 
         {/* Hero Title */}

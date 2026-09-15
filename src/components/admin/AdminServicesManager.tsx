@@ -70,13 +70,13 @@ export const AdminServicesManager: React.FC<AdminServicesManagerProps> = ({
 
   const handleOpenEdit = (srv: ServiceItem) => {
     setEditingService(srv);
-    setTitle(srv.title);
+    setTitle(srv.name || srv.title || '');
     setCategory(srv.category);
-    setIcon(srv.icon || 'Wrench');
-    setShortDescription(srv.shortDescription);
-    setDetailedDescription(srv.detailedDescription);
+    setIcon(srv.iconName || srv.icon || 'Wrench');
+    setShortDescription(srv.tagline || srv.shortDescription || '');
+    setDetailedDescription(srv.description || srv.detailedDescription || '');
     setBasePriceEstimate(srv.basePriceEstimate);
-    setTypicalTimeline(srv.typicalTimeline);
+    setTypicalTimeline(srv.completionTimeline || srv.typicalTimeline || '3-5 Working Days');
     setFeaturesInput(srv.keyFeatures.join('\n'));
     setBrandsInput(srv.hardwareBrands.join(', '));
     setHasTrainingCourse(!!srv.hasTrainingCourse);
@@ -108,34 +108,32 @@ export const AdminServicesManager: React.FC<AdminServicesManagerProps> = ({
       .map(b => b.trim())
       .filter(Boolean);
 
+    const slug = (title || 'service').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    const servicePayload: any = {
+      name: title,
+      title,
+      slug,
+      category,
+      iconName: icon,
+      icon,
+      tagline: shortDescription,
+      shortDescription,
+      description: detailedDescription || shortDescription,
+      detailedDescription: detailedDescription || shortDescription,
+      basePriceEstimate: Number(basePriceEstimate) || 500000,
+      currency: 'NGN',
+      completionTimeline: typicalTimeline,
+      typicalTimeline,
+      keyFeatures: keyFeatures.length > 0 ? keyFeatures : ['Full Professional Engineering Deployment'],
+      hardwareBrands: hardwareBrands.length > 0 ? hardwareBrands : ['Certified OEM Standard'],
+      hasTrainingCourse,
+      trainingCourseId: hasTrainingCourse ? trainingCourseId : undefined,
+    };
+
     if (editingService) {
-      appStore.updateService(editingService.id, {
-        title,
-        category,
-        icon,
-        shortDescription,
-        detailedDescription: detailedDescription || shortDescription,
-        basePriceEstimate: Number(basePriceEstimate) || 500000,
-        typicalTimeline,
-        keyFeatures: keyFeatures.length > 0 ? keyFeatures : ['Full Professional Engineering Deployment'],
-        hardwareBrands: hardwareBrands.length > 0 ? hardwareBrands : ['Certified OEM Standard'],
-        hasTrainingCourse,
-        trainingCourseId: hasTrainingCourse ? trainingCourseId : undefined,
-      });
+      appStore.updateService(editingService.id, servicePayload);
     } else {
-      appStore.createService({
-        title,
-        category,
-        icon,
-        shortDescription,
-        detailedDescription: detailedDescription || shortDescription,
-        basePriceEstimate: Number(basePriceEstimate) || 500000,
-        typicalTimeline,
-        keyFeatures: keyFeatures.length > 0 ? keyFeatures : ['Full Professional Engineering Deployment'],
-        hardwareBrands: hardwareBrands.length > 0 ? hardwareBrands : ['Certified OEM Standard'],
-        hasTrainingCourse,
-        trainingCourseId: hasTrainingCourse ? trainingCourseId : undefined,
-      });
+      appStore.createService(servicePayload);
     }
 
     setShowModal(false);
@@ -145,9 +143,11 @@ export const AdminServicesManager: React.FC<AdminServicesManagerProps> = ({
 
   const filteredServices = services.filter((srv) => {
     const matchesCategory = categoryFilter === 'all' || srv.category === categoryFilter;
+    const sName = (srv.name || srv.title || '').toLowerCase();
+    const sDesc = (srv.tagline || srv.shortDescription || srv.description || '').toLowerCase();
     const matchesSearch = searchQuery === '' || 
-      srv.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      srv.shortDescription.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      sName.includes(searchQuery.toLowerCase()) ||
+      sDesc.includes(searchQuery.toLowerCase()) ||
       srv.hardwareBrands.some(b => b.toLowerCase().includes(searchQuery.toLowerCase()));
     return matchesCategory && matchesSearch;
   });
@@ -222,19 +222,19 @@ export const AdminServicesManager: React.FC<AdminServicesManagerProps> = ({
 
               {/* Title */}
               <h4 className="text-base font-bold text-white mb-1.5 leading-snug">
-                {srv.title}
+                {srv.name || srv.title}
               </h4>
 
               {/* Description */}
               <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed mb-4">
-                {srv.shortDescription}
+                {srv.tagline || srv.shortDescription || srv.description}
               </p>
 
               {/* Timeline & Features */}
               <div className="space-y-1.5 text-xs text-slate-300 mb-4 pt-2 border-t border-slate-800">
                 <div className="flex items-center gap-1.5 text-[11px] text-slate-400">
                   <Clock className="w-3.5 h-3.5 text-blue-400 flex-shrink-0" />
-                  <span>Timeline: {srv.typicalTimeline}</span>
+                  <span>Timeline: {srv.completionTimeline || srv.typicalTimeline}</span>
                 </div>
                 <div className="flex items-center gap-1.5 text-[11px] text-slate-400">
                   <Cpu className="w-3.5 h-3.5 text-purple-400 flex-shrink-0" />

@@ -11,14 +11,17 @@ import {
   Lock,
   Cpu,
   GraduationCap,
-  Sparkles
+  Sparkles,
+  Play,
+  Film,
+  Star
 } from 'lucide-react';
 import { appStore } from '../services/store';
 import { ThemeToggle } from '../context/ThemeContext';
 
 interface NavbarProps {
-  currentView?: 'home' | 'services' | 'training' | 'projects' | 'contact' | 'admin';
-  onNavigate?: (view: 'home' | 'services' | 'training' | 'projects' | 'contact' | 'admin') => void;
+  currentView?: 'home' | 'services' | 'training' | 'projects' | 'videos' | 'testimonials' | 'contact' | 'admin';
+  onNavigate?: (view: 'home' | 'services' | 'training' | 'projects' | 'videos' | 'testimonials' | 'contact' | 'admin') => void;
   onOpenBooking?: (serviceId?: string) => void;
   onOpenLiveChat?: () => void;
   onOpenAdmin?: () => void;
@@ -39,7 +42,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     onOpenBooking?.(serviceId);
   };
 
-  const handleNav = (view: 'home' | 'services' | 'training' | 'projects' | 'contact' | 'admin') => {
+  const handleNav = (view: 'home' | 'services' | 'training' | 'projects' | 'videos' | 'testimonials' | 'contact' | 'admin') => {
     setMobileMenuOpen(false);
 
     if (view === 'admin') {
@@ -166,6 +169,30 @@ export const Navbar: React.FC<NavbarProps> = ({
             Projects
           </button>
           <button
+            id="nav-videos-btn"
+            onClick={() => handleNav('videos')}
+            className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all flex items-center gap-1.5 ${
+              currentView === 'videos'
+                ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800'
+            }`}
+          >
+            <Film className="w-3.5 h-3.5 text-red-500" />
+            Videos
+          </button>
+          <button
+            id="nav-testimonials-btn"
+            onClick={() => handleNav('testimonials')}
+            className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all flex items-center gap-1.5 ${
+              currentView === 'testimonials'
+                ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800'
+            }`}
+          >
+            <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500/30" />
+            Reviews
+          </button>
+          <button
             id="nav-contact-btn"
             onClick={() => handleNav('contact')}
             className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all ${
@@ -288,6 +315,30 @@ export const Navbar: React.FC<NavbarProps> = ({
             }`}
           >
             Executed Projects
+          </button>
+          <button
+            onClick={() => handleNav('videos')}
+            className={`w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium flex items-center justify-between ${
+              currentView === 'videos' ? 'bg-blue-600 text-white' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+            }`}
+          >
+            <span className="flex items-center gap-2">
+              <Film className="w-4 h-4 text-red-500" />
+              <span>Project Videos Showcase</span>
+            </span>
+            <span className="text-xs px-2 py-0.5 rounded bg-red-50 dark:bg-red-500/20 text-red-700 dark:text-red-300">YouTube</span>
+          </button>
+          <button
+            onClick={() => handleNav('testimonials')}
+            className={`w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium flex items-center justify-between ${
+              currentView === 'testimonials' ? 'bg-blue-600 text-white' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+            }`}
+          >
+            <span className="flex items-center gap-2">
+              <Star className="w-4 h-4 text-amber-500 fill-amber-500/30" />
+              <span>Client Reviews & Testimonials</span>
+            </span>
+            <span className="text-xs px-2 py-0.5 rounded bg-amber-50 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300">5.0 ★</span>
           </button>
           <button
             onClick={() => handleNav('contact')}
