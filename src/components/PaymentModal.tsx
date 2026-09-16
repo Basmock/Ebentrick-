@@ -128,6 +128,12 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
               <X className="w-5 h-5" />
             </button>
 
+            {/* Notice: Payments disabled */}
+            <div className="mb-4 p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center gap-2.5 text-xs text-amber-300">
+              <span className="w-2 h-2 rounded-full bg-amber-400 flex-shrink-0 animate-ping"></span>
+              <span><strong>Notice:</strong> Online payment options are disabled for now. All orders are settled via official corporate invoice.</span>
+            </div>
+
             {/* Header */}
             <div className="mb-6">
               <div className="flex items-center gap-2 text-xs font-mono uppercase text-blue-400 font-bold mb-1">

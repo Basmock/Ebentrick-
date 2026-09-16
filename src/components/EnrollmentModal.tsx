@@ -65,7 +65,8 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
       });
 
       setIsSubmitting(false);
-      onEnrollmentSuccess(enrollment, payNow);
+      // Direct online payment is disabled for now; reserve seat directly
+      onEnrollmentSuccess(enrollment, false);
     } catch (err: any) {
       setIsSubmitting(false);
       alert(err.message || 'Enrollment failed.');
@@ -229,8 +230,17 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
             </div>
           </div>
 
+          {/* Direct payment paused notice */}
+          <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 flex items-center justify-between gap-2 text-xs text-slate-300">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+              <span>Online checkout paused. Tuition invoice and orientation packet will be issued to your email.</span>
+            </div>
+            <span className="text-[10px] font-mono text-amber-400 font-semibold uppercase">No Card Required</span>
+          </div>
+
           {/* Guarantee pill */}
-          <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 flex items-center gap-2 text-xs text-slate-300">
+          <div className="p-3 rounded-xl bg-slate-950/50 border border-slate-800/80 flex items-center gap-2 text-xs text-slate-400">
             <ShieldCheck className="w-4 h-4 text-emerald-400 flex-shrink-0" />
             <span>Admission includes official student kit, laboratory access & certificate processing.</span>
           </div>
@@ -250,8 +260,8 @@ export const EnrollmentModal: React.FC<EnrollmentModalProps> = ({
               disabled={isSubmitting}
               className="w-full sm:w-auto px-7 py-3 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 shadow-lg shadow-red-600/30 transition-all flex items-center justify-center gap-2"
             >
-              <CreditCard className="w-4 h-4" />
-              <span>Proceed To Secure Checkout ({formatNaira(amountToPayNow)})</span>
+              <GraduationCap className="w-4 h-4" />
+              <span>Submit Application & Reserve Seat</span>
             </button>
           </div>
         </form>

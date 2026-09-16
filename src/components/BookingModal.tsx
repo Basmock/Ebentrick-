@@ -110,7 +110,8 @@ export const BookingModal: React.FC<BookingModalProps> = ({
       });
 
       setIsSubmitting(false);
-      onBookingSuccess(newBooking, payOnlineNow);
+      // Online payment is disabled; generate invoice and booking record directly
+      onBookingSuccess(newBooking, false);
     } catch (err) {
       setIsSubmitting(false);
       alert('Failed to process booking. Please try again.');
@@ -359,19 +360,13 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 </span>
               </div>
 
-              {/* Payment toggle */}
-              <div className="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-800">
-                <input
-                  type="checkbox"
-                  id="pay-now-toggle"
-                  checked={payOnlineNow}
-                  onChange={(e) => setPayOnlineNow(e.target.checked)}
-                  className="w-4 h-4 rounded text-blue-600 bg-slate-800 border-slate-700 focus:ring-blue-500"
-                />
-                <label htmlFor="pay-now-toggle" className="text-xs text-slate-300 select-none cursor-pointer">
-                  <span className="font-bold text-white block">Pay & Confirm Online Now</span>
-                  <span className="text-[10px] text-slate-400">Secure card / instant transfer checkout</span>
-                </label>
+              {/* Payment status badge - Disabled for now */}
+              <div className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300">
+                <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+                <div>
+                  <span className="font-semibold text-white block">Direct Payment Paused</span>
+                  <span className="text-[10px] text-slate-400">Official itemized invoice generated upon booking</span>
+                </div>
               </div>
             </div>
           </div>
@@ -391,17 +386,8 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               disabled={isSubmitting}
               className="w-full sm:w-auto px-7 py-3 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 shadow-lg shadow-blue-600/30 transition-all flex items-center justify-center gap-2"
             >
-              {payOnlineNow ? (
-                <>
-                  <CreditCard className="w-4 h-4" />
-                  <span>Proceed To Secure Payment ({formatNaira(estimatedTotal)})</span>
-                </>
-              ) : (
-                <>
-                  <FileText className="w-4 h-4" />
-                  <span>Submit Booking & Request Engineering Survey</span>
-                </>
-              )}
+              <FileText className="w-4 h-4" />
+              <span>Submit Booking & Generate Itemized Quote</span>
             </button>
           </div>
         </form>

@@ -156,7 +156,12 @@ class AuthService {
   }
 
   public async signIn(email: string, password: string): Promise<{ success: boolean; user?: User; error?: string }> {
-    const cleanEmail = email.trim().toLowerCase();
+    let cleanEmail = email.trim().toLowerCase();
+
+    // Map common admin aliases to the official Admin Manager email
+    if (cleanEmail === 'admin' || cleanEmail === 'admin@ebentrick.com') {
+      cleanEmail = ADMIN_MANAGER_EMAIL.toLowerCase();
+    }
 
     // 1. Try Supabase Auth first
     try {
@@ -272,7 +277,15 @@ class AuthService {
       });
 
       if (!sbError && sbData?.user) {
-        // Any user signing up gets a new generated UID, never the admin manager UID
+        // Automatically sign in so a live session and JWT are established
+        try {
+          await supabase.auth.signInWithPassword({
+            email: cleanEmail,
+            password: data.password,
+          });
+        } catch {}
+
+        // Any user signing up gets their Supabase UID, never the admin manager UID
         const safeUser: User = {
           id: sbData.user.id,
           name: data.name.trim(),
@@ -357,54 +370,23 @@ class AuthService {
     this.notify();
   }
 
-  public quickLoginDemo(role: 'admin' | 'client' | 'student'): Promise<User> {
-    let demo: User & { passwordHash: string };
+  public async quickLoginDemo(role: 'admin' | 'client' | 'student'): Promise<User> {
+    let email = ADMIN_MANAGER_EMAIL;
+    let password = 'Mockfast1122';
 
-    if (role === 'admin') {
-      demo = {
-        id: ADMIN_MANAGER_UID, // Strictly designated UID
-        name: 'Engr. Bassey Okon (Admin Manager)',
-        email: ADMIN_MANAGER_EMAIL,
-        role: 'admin',
-        phone: '+234 803 245 8901',
-        company: 'Ebentrick Global Services Ltd',
-        passwordHash: 'Mockfast1122',
-        createdAt: '2026-01-10T08:00:00Z',
-        avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-      };
-    } else if (role === 'client') {
-      demo = {
-        id: 'c9381665-2761-419b-a010-8b1b228b34aa',
-        name: 'Chief Tunde Adeleke',
-        email: 'client@ebentrick.com',
-        role: 'client',
-        phone: '+234 812 400 9988',
-        company: 'Adeleke Commercial Estates VI',
-        passwordHash: 'client123',
-        createdAt: '2026-02-14T11:30:00Z',
-        avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
-      };
-    } else {
-      demo = {
-        id: 's1298471-5512-4cf4-912b-478ac6b28899',
-        name: 'Chidinma Eze',
-        email: 'student@ebentrick.com',
-        role: 'student',
-        phone: '+234 809 332 1144',
-        company: 'Federal University of Technology Alumni',
-        passwordHash: 'student123',
-        createdAt: '2026-03-01T09:15:00Z',
-        avatarUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
-      };
+    if (role === 'client') {
+      email = 'client@ebentrick.com';
+      password = 'client123';
+    } else if (role === 'student') {
+      email = 'student@ebentrick.com';
+      password = 'student123';
     }
 
-    const { passwordHash, ...safeUser } = demo;
-    this.currentUser = safeUser;
-    try {
-      localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(safeUser));
-    } catch {}
-    this.notify();
-    return Promise.resolve(safeUser);
+    const res = await this.signIn(email, password);
+    if (res.success && res.user) {
+      return res.user;
+    }
+    throw new Error(res.error || 'Failed to sign in with demo account');
   }
 
   public getAllUsers(): User[] {

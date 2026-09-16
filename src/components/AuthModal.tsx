@@ -135,15 +135,29 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   const handleQuickDemo = async (role: UserRole) => {
     setIsLoading(true);
     setErrorMessage(null);
+    setSuccessMessage(null);
+
+    // Populate inputs so user sees the active credentials
+    if (role === 'admin') {
+      setSignInEmail('workebentrick@gmail.com');
+      setSignInPassword('Mockfast1122');
+    } else if (role === 'client') {
+      setSignInEmail('client@ebentrick.com');
+      setSignInPassword('client123');
+    } else if (role === 'student') {
+      setSignInEmail('student@ebentrick.com');
+      setSignInPassword('student123');
+    }
+
     try {
       const user = await authService.quickLoginDemo(role);
-      setSuccessMessage(`Logged in as ${user.name} (${user.role.toUpperCase()})`);
+      setSuccessMessage(`Authenticated with Supabase! Welcome, ${user.name}.`);
       setTimeout(() => {
         onSuccess?.(user.role);
         onClose();
-      }, 500);
-    } catch {
-      setErrorMessage('Demo login failed.');
+      }, 700);
+    } catch (err: any) {
+      setErrorMessage(err?.message || 'Demo login failed. Please check network.');
     } finally {
       setIsLoading(false);
     }
@@ -484,8 +498,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 <div className="text-[11px] font-semibold text-slate-800 dark:text-slate-200 truncate mt-0.5">
                   Engr. Bassey
                 </div>
-                <div className="text-[9px] font-mono text-slate-400 truncate">
-                  UID: 350afc5a...
+                <div className="text-[9px] font-mono text-slate-500 dark:text-slate-400 truncate">
+                  workebentrick@...
+                </div>
+                <div className="text-[9px] font-mono text-red-600/80 dark:text-red-400/80 font-bold mt-0.5">
+                  Mockfast1122
                 </div>
               </button>
 
@@ -501,6 +518,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 <div className="text-[11px] font-semibold text-slate-800 dark:text-slate-200 truncate mt-0.5">
                   Chief Adeleke
                 </div>
+                <div className="text-[9px] font-mono text-slate-500 dark:text-slate-400 truncate">
+                  client@ebentrick.com
+                </div>
+                <div className="text-[9px] font-mono text-blue-600/80 dark:text-blue-400/80 font-bold mt-0.5">
+                  client123
+                </div>
               </button>
 
               <button
@@ -514,6 +537,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 </div>
                 <div className="text-[11px] font-semibold text-slate-800 dark:text-slate-200 truncate mt-0.5">
                   Chidinma Eze
+                </div>
+                <div className="text-[9px] font-mono text-slate-500 dark:text-slate-400 truncate">
+                  student@ebentrick.com
+                </div>
+                <div className="text-[9px] font-mono text-emerald-600/80 dark:text-emerald-400/80 font-bold mt-0.5">
+                  student123
                 </div>
               </button>
             </div>

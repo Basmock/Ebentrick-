@@ -129,44 +129,49 @@ export default function App() {
     setIsEnrollmentModalOpen(true);
   };
 
-  // When a booking completes
-  const handleBookingSuccess = (booking: ServiceBooking, triggerPayment: boolean) => {
+  // When a booking completes (payment disabled for now)
+  const handleBookingSuccess = (booking: ServiceBooking) => {
     setIsBookingModalOpen(false);
-
-    if (triggerPayment) {
-      setPaymentData({
-        amount: booking.estimatedCost,
-        description: `Deployment Booking: ${booking.serviceName} (${booking.premisesType})`,
-        referenceId: booking.id,
-        referenceCode: booking.referenceCode,
-        customerEmail: booking.email,
-        customerName: booking.customerName,
-      });
-      setIsPaymentModalOpen(true);
-    } else {
-      // Build and show the formal invoice/quote document immediately
-      buildAndShowInvoiceForBooking(booking);
-    }
+    // Online payments are disabled for now: immediately show the formal itemized quote / invoice
+    buildAndShowInvoiceForBooking(booking);
   };
 
-  // When an enrollment completes
-  const handleEnrollmentSuccess = (enrollment: TrainingEnrollment, triggerPayment: boolean) => {
+  // When an enrollment completes (payment disabled for now)
+  const handleEnrollmentSuccess = (enrollment: TrainingEnrollment) => {
     setIsEnrollmentModalOpen(false);
-    const amountToPay = enrollment.paymentPlan === 'full' 
-      ? enrollment.tuitionFee 
-      : Math.round(enrollment.tuitionFee / 2);
+    // Create formal admission reservation invoice for the student
+    const subtotal = Math.round(enrollment.tuitionFee / 1.075);
+    const vat = enrollment.tuitionFee - subtotal;
 
-    if (triggerPayment) {
-      setPaymentData({
-        amount: amountToPay,
-        description: `Academy Tuition: ${enrollment.courseTitle} (${enrollment.paymentPlan.replace('_', ' ')})`,
-        referenceId: enrollment.id,
-        referenceCode: enrollment.registrationNumber,
-        customerEmail: enrollment.email,
-        customerName: enrollment.studentName,
-      });
-      setIsPaymentModalOpen(true);
-    }
+    setInvoiceData({
+      invoiceNumber: `ADM-${enrollment.registrationNumber}`,
+      referenceCode: enrollment.registrationNumber,
+      issueDate: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      dueDate: enrollment.cohortStartDate,
+      customerName: enrollment.studentName,
+      customerEmail: enrollment.email,
+      customerPhone: enrollment.phone,
+      customerAddress: 'Ebentrick Engineering Academy Laboratory Hub',
+      serviceName: `Academy Admission: ${enrollment.courseTitle}`,
+      items: [
+        {
+          description: `Academy Tuition Seat: ${enrollment.courseTitle}`,
+          qty: 1,
+          unitPrice: subtotal,
+          total: subtotal,
+        },
+        {
+          description: 'Official Engineering Lab Kit & Safety PPE Gear',
+          qty: 1,
+          unitPrice: 0,
+          total: 0,
+        },
+      ],
+      subtotal,
+      vat,
+      totalAmount: enrollment.tuitionFee,
+      isPaid: false, // direct payment disabled; reservation pending
+    });
   };
 
   // When payment is processed
